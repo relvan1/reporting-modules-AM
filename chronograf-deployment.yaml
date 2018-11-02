@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: chronograf
+  labels:
+    app: chronograf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chronograf
+  template:
+    metadata:
+      labels:
+        app: chronograf
+    spec:
+      containers:
+        - image: chronograf
+          name: chronograf
+          volumeMounts:
+          - name: chronograf-nfs
+            mountPath: /var/lib/chronograf/
+          ports:
+          - name: chronograf-dashboard
+            containerPort: 8888
+      volumes:
+      - name: chronograf-nfs
+        nfs:
+            server: 10.34.167.250
+            path: "/storage/chronograf/"
+      nodeSelector:
+        type: tick

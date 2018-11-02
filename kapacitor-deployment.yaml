@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: kapacitor
+  labels:
+    app: kapacitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kapacitor
+  template:
+    metadata:
+      labels:
+        app: kapacitor
+    spec:
+      containers:
+        - image: kapacitor
+          name: kapacitor
+          env:
+          - name: KAPACITOR_INFLUXDB_0_URLS_0
+            value: http://35.232.202.196:8086
+          volumeMounts:
+          - name: kapacitor-nfs
+            mountPath: /var/lib/kapacitor/
+          ports:
+          - name: api
+            containerPort: 9092
+      volumes:
+      - name: kapacitor-nfs
+        nfs:
+            server: 10.34.167.250
+            path: "/storage/kapacitor/"
+      nodeSelector:
+        type: tick

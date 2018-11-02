@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: influxdb
+  labels:
+    app: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+        - image: influxdb
+          name: influxdb
+          volumeMounts:
+          - name: influxdb-nfs
+            mountPath: /var/lib/influxdb
+          resources:
+            limits:
+              memory: "52G"
+              cpu: "8000m"
+          ports:
+            - containerPort: 8086
+              name: api
+      volumes:
+      - name: influxdb-nfs
+        nfs:
+            server: 10.34.167.250
+            path: "/storage/influxdb/"
+      nodeSelector:
+        type: tick

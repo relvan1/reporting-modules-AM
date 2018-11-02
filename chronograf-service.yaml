@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chronograf
+  labels:
+    app: chronograf
+spec:
+  ports:
+    - port: 8888
+      name: chronograf-dashboard
+      targetPort: 8888
+  selector:
+    app: chronograf
+  type: LoadBalancer
+  loadBalancerIP: "35.193.145.223"
