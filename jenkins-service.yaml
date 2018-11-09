@@ -15,4 +15,4 @@ spec:
   selector:
     app: jenkins
   type: LoadBalancer
-  loadBalancerIP: "35.232.146.172"
+  loadBalancerIP: "X.X.X.X"
