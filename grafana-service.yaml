@@ -11,4 +11,4 @@ spec:
   selector:
     app: grafana
   type: LoadBalancer
-  loadBalancerIP: "35.232.209.149"
+  loadBalancerIP: "X.X.X.X"
