@@ -3,13 +3,13 @@ kind: Service
 metadata:
   name: kapacitor
   labels:
-    app: jmeter-kapacitor
+    app: kapacitor
 spec:
   ports:
     - port: 9092
       name: kapacitor-api
       targetPort: 9092
   selector:
-    app: jmeter-kapacitor
+    app: kapacitor
   type: LoadBalancer
   loadBalancerIP: "35.193.145.223"

@@ -21,7 +21,7 @@ spec:
           - name: chronograf-nfs
             mountPath: /var/lib/chronograf/
           ports:
-          - name: chronograf-dashboard
+          - name: dashboard
             containerPort: 8888
       volumes:
       - name: chronograf-nfs

@@ -15,7 +15,7 @@ spec:
         app: jenkins
     spec:
       containers:
-        - image: relvan/my-jenkins
+        - image: jenkins/jenkins
           name: jenkins
           volumeMounts:
           - name: jenkins-nfs
@@ -31,4 +31,4 @@ spec:
             server: 10.34.167.250
             path: "/storage/jenkins/"
       nodeSelector:
-        type: tick
+        type: storage-and-monitoring

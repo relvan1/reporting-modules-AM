@@ -6,10 +6,10 @@ metadata:
     app: chronograf
 spec:
   ports:
-    - port: 8888
+    - port: 80
       name: chronograf-dashboard
       targetPort: 8888
   selector:
     app: chronograf
   type: LoadBalancer
-  loadBalancerIP: "35.193.145.223"
+  loadBalancerIP: "35.224.165.101"

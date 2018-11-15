@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: grafana/grafana
+        image: softcrylicqa/my-grafana
         ports:
         - containerPort: 3000
           protocol: TCP
@@ -36,10 +36,12 @@ spec:
           # If you're only using the API Server proxy, set this value instead:
           # value: /api/v1/namespaces/kube-system/services/monitoring-grafana/proxy
           value: /
+      imagePullSecrets:
+      - name: dockerinfo
       volumes:
       - name: grafana-nfs
         nfs:
             server: 10.34.167.250
             path: "/storage/grafana/"
       nodeSelector:
-        type: jenkins&grafana
+        type: tick
