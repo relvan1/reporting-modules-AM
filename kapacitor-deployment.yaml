@@ -19,7 +19,7 @@ spec:
           name: kapacitor
           env:
           - name: KAPACITOR_INFLUXDB_0_URLS_0
-            value: http://35.232.202.196:8086
+            value: http://INFLUXDB-SERVICE-IP:8086
           volumeMounts:
           - name: kapacitor-nfs
             mountPath: /var/lib/kapacitor/
@@ -29,7 +29,7 @@ spec:
       volumes:
       - name: kapacitor-nfs
         nfs:
-            server: 10.34.167.250
+            server: X.X.X.X
             path: "/storage/kapacitor/"
       nodeSelector:
         type: tick

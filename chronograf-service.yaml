@@ -12,4 +12,8 @@ spec:
   selector:
     app: chronograf
   type: LoadBalancer
+<<<<<<< HEAD
   loadBalancerIP: "35.224.165.101"
+=======
+  loadBalancerIP: "X.X.X.X"
+>>>>>>> ad07dda13e5eff67a7eb1e6e6a7a688b73c1a3ed

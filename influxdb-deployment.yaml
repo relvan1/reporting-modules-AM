@@ -26,7 +26,7 @@ spec:
       volumes:
       - name: influxdb-nfs
         nfs:
-            server: 10.34.167.250
+            server: X.X.X.X
             path: "/storage/influxdb/"
       nodeSelector:
         type: tick
