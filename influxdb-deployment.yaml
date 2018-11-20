@@ -20,6 +20,10 @@ spec:
           volumeMounts:
           - name: influxdb-nfs
             mountPath: /var/lib/influxdb
+          resources:
+            limits:
+              memory: "45G"
+              cpu: "5000m"
           ports:
             - containerPort: 8086
               name: api

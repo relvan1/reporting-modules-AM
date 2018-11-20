@@ -15,7 +15,7 @@ spec:
         app: jenkins
     spec:
       containers:
-        - image: relvan/my-jenkins
+        - image: softcrylicqa/my-jenkins
           name: jenkins
           volumeMounts:
           - name: jenkins-nfs
