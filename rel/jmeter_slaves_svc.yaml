@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jmeter-slaves-svc
+  labels:
+    jmeter_mode: slave
+spec:
+  clusterIP: None
+  ports:
+    - port: 1099
+      name: first
+      targetPort: 1099
+    - port: 50000
+      name: second
+      targetPort: 50000
+    - port: 24224
+      name: fluentd1
+      targetPort: 24224
+    - port: 5150
+      name: fluentd2
+      targetPort: 5140
+  selector:
+    jmeter_mode: slave

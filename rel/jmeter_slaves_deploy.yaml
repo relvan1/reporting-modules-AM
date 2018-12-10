@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: jmeter-slaves
+  labels:
+    jmeter_mode: slave
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      jmeter_mode: slave
+  template:
+    metadata:
+      labels:
+        jmeter_mode: slave
+    spec:
+      containers:
+      - name: jmslave
+        image: softcrylicqa/jmeter-slave
+        volumeMounts:
+          - name: config-volume
+            mountPath: /etc/td-agent
+        ports:
+        - containerPort: 1099
+        - containerPort: 50000
+        - containerPort: 24224
+        - containerPort: 5140
+      volumes:
+      - name: config-volume
+        configMap:
+          name: jmeter-fluentd-configmap
