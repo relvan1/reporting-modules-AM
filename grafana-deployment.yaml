@@ -41,7 +41,7 @@ spec:
       volumes:
       - name: grafana-nfs
         nfs:
-            server: X.X.X.X
+            server: 10.34.167.250
             path: "/storage/grafana/"
       nodeSelector:
         type: tick

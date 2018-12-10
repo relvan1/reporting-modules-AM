@@ -12,4 +12,4 @@ spec:
   selector:
     app: influxdb
   type: LoadBalancer
-  loadBalancerIP: "X.X.X.X"
+#  loadBalancerIP: "X.X.X.X"

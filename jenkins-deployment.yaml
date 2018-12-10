@@ -28,7 +28,7 @@ spec:
       volumes:
       - name: jenkins-nfs
         nfs:
-            server: X.X.X.X
+            server: 10.34.167.250
             path: "/storage/jenkins/"
       nodeSelector:
         type: tick

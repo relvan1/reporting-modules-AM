@@ -29,7 +29,7 @@ spec:
       volumes:
       - name: kapacitor-nfs
         nfs:
-            server: X.X.X.X
+            server: 10.34.167.250
             path: "/storage/kapacitor/"
       nodeSelector:
         type: tick

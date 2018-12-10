@@ -1,0 +1,89 @@
+# RBAC authn and authz
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: elasticsearch
+  labels:
+    k8s-app: elasticsearch
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: elasticsearch
+  labels:
+    k8s-app: elasticsearch
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - "services"
+  - "namespaces"
+  - "endpoints"
+  verbs:
+  - "get"
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: elasticsearch
+  labels:
+    k8s-app: elasticsearch
+subjects:
+- kind: ServiceAccount
+  name: elasticsearch
+  namespace: efk
+  apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: elasticsearch
+  apiGroup: ""
+---
+# Elasticsearch deployment itself
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch
+  labels:
+    k8s-app: elasticsearch
+    version: v6.3.0
+spec:
+  serviceName: elasticsearch
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: elasticsearch
+      version: v6.3.0
+  template:
+    metadata:
+      labels:
+        k8s-app: elasticsearch
+        version: v6.3.0
+    spec:
+      serviceAccountName: elasticsearch
+      containers:
+      - image: elasticsearch:6.5.1 
+        name: elasticsearch
+        ports:
+        - containerPort: 9200
+          name: db
+          protocol: TCP
+        - containerPort: 9300
+          name: transport
+          protocol: TCP
+        volumeMounts:
+        - name: elasticsearch
+          mountPath: /data
+      volumes:
+      - name: elasticsearch
+        nfs:
+            server: 10.34.167.250
+            path: "/storage/elasticsearch/"
+      # Elasticsearch requires vm.max_map_count to be at least 262144.
+      # If your OS already sets up this number to a higher value, feel free
+      # to remove this init container.
+      initContainers:
+      - image: alpine:3.6
+        command: ["/sbin/sysctl", "-w", "vm.max_map_count=262144"]
+        name: elasticsearch-logging-init
+        securityContext:
+          privileged: true
