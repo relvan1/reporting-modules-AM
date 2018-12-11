@@ -33,4 +33,4 @@ spec:
          name: jmeter-load-test
       - name: config-volume
         configMap:
-          name: jmeter-fluentd-configmap
+          name: jmeter-fluentd-master-cm

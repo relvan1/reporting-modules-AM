@@ -327,7 +327,7 @@ data:
       @log_level info
       type_name fluentd
       include_tag_key true
-      host 35.239.204.216
+      host 104.197.142.207
       port 9200
       index_name jmetercluster
       <buffer>

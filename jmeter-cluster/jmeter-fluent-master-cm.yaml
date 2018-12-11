@@ -1,0 +1,53 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jmeter-fluentd-master-cm
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+data:
+  td-agent.conf: |-
+    <source>
+      @type tail
+      path /*.jtl
+      pos_file /var/log/td-agent/jmeter.jtl.pos
+      read_from_head true
+      format csv
+      tag jtl.*
+      keys timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+      types timeStamp:time,elapsed:integer,label:string,responseCode:integer,responseMessage:string,threadName:string,dataType:string,success:bool,failureMessage:string,bytes:integer,sentBytes:integer,grpThreads:integer,allThreads:integer,URL:string,Latency:integer,IdleTime:integer,Connect:integer
+      time_key timeStamp
+      time_format "%F %T"
+      read_lines_limit 100
+    </source>
+
+    <source>
+      @type tail
+      path /jmeter*.log
+      pos_file /var/log/td-agent/jmeter.log.pos
+      read_from_head true
+      format csv
+      tag logs.*
+      keys timeStamp,logDetails
+      types timeStamp:time,logDetails:string
+      time_key timeStamp
+      time_format "%F %T"
+      read_lines_limit 100
+    </source>
+
+    <match jtl**>
+      @type elasticsearch
+      host 104.197.142.207
+      port 9200
+      index_name jtl-logs
+      type_name jtl
+      flush_interval 5s
+    </match>
+
+    <match logs**>
+      @type elasticsearch
+      host 104.197.142.207
+      port 9200
+      index_name masterlog
+      type_name master
+      flush_interval 5s
+    </match>

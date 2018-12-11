@@ -28,4 +28,4 @@ spec:
       volumes:
       - name: config-volume
         configMap:
-          name: jmeter-fluentd-configmap
+          name: jmeter-fluentd-slave-cm

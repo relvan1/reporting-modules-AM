@@ -121,7 +121,9 @@ kubectl create clusterrolebinding myname-cluster-admin-binding --clusterrole=clu
 
 kubectl create -n $tenant -f $working_dir/fluentd-configmap.yaml
 
-kubectl create -n $tenant -f $working_dir/jmeter-fluent-configmap.yaml
+kubectl create -n $tenant -f $working_dir/jmeter-fluent-master-cm.yaml
+
+kubectl create -n $tenant -f $working_dir/jmeter-fluent-slave-cm.yaml
 
 kubectl create -n $tenant -f $working_dir/fluentd-daemonset.yaml
 
@@ -133,7 +135,7 @@ kubectl create -n $tenant -f $working_dir/jmeter_master_configmap.yaml
 
 kubectl create -n $tenant -f $working_dir/jmeter_master_deploy.yaml
 
-sleep 120
+sleep 90
 
 master_pod=`kubectl get po -n $tenant | grep jmeter-master | awk '{print $1}'`
 

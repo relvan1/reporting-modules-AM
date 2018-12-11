@@ -1,0 +1,30 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jmeter-fluentd-slave-cm
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+data:
+  td-agent.conf: |-
+    <source>
+      @type tail
+      path /jmeter*.log
+      pos_file /var/log/td-agent/jmeter.log.pos
+      read_from_head true
+      format csv
+      tag logs.*
+      keys timeStamp,logDetails
+      types timeStamp:time,logDetails:string
+      time_key timeStamp
+      time_format "%F %T"
+      read_lines_limit 100
+    </source>
+
+    <match logs**>
+      @type elasticsearch
+      host 104.197.142.207
+      port 9200
+      index_name slave-logs
+      type_name slave
+      flush_interval 5s
+    </match>
